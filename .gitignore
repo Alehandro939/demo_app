@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+./node_modules
+**/node_modules
+
+backend/node_modules
+./backend/node_modules
+frontend/node_modules
+./frontend/node_modules
+
+# github self-hosted runner artifacts (NU le comite)
+actions-runner/
+**/actions-runner/
+./actions-runner
+
+# runner work folders (extra safety)
+_work/
+**/_work/
+
+# logs, caches
+*.log
+.DS_Store

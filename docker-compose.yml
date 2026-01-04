@@ -1,0 +1,44 @@
+services:
+  frontend:
+    image: demoapp_frontend:latest
+    build:
+      context: ./frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+  backend:
+    image: demoapp_backend:latest
+    build:
+      context: ./backend
+    environment:
+      - DB_HOST=db
+      - DB_USER=demo
+      - DB_PASSWORD=demo
+      - DB_NAME=demoapp
+      - SESSION_SECRET=secret123
+      - VULN_SQLI=true
+      - VULN_XSS=true
+      - VULN_CSRF=true
+      - VULN_COOKIE_FLAGS=true
+      - VULN_HEADERS=true
+      - VULN_DEBUG_ROUTES=true
+      - VULN_AUTH_WEAK=true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+      - POSTGRES_DB=demoapp
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  dbdata:

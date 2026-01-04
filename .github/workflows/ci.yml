@@ -1,0 +1,10 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  SecurityScan:
+    uses: Alehandro939/security_web/.github/workflows/security.yml@main
+    
